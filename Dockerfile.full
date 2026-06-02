@@ -1,0 +1,62 @@
+# AIKI-HLA end-to-end Docker image (CPU; raw peptide string → binding probability).
+#
+# Heavier image that adds the ESM-2 650M backbone for on-the-fly embedding of
+# novel peptides — no pre-computed embedding cache required from the user.
+#
+# Published as: ghcr.io/aikium-public/aiki-hla:<version>-full
+#               ghcr.io/aikium-public/aiki-hla:full-latest
+#
+# Usage:
+#   docker run --rm -v aiki-hla-models:/models \
+#       ghcr.io/aikium-public/aiki-hla:latest-full \
+#       score --peptides peptides.csv --alleles alleles.csv --out predictions.csv
+#
+# The /models volume caches:
+#   * ESM-2 650M weights (~2.5 GB; downloaded by fair-esm on first call)
+#   * AIKI-HLA 3-seed deployment ensemble (~142 MB; from Zenodo)
+#
+# For a GPU build, change the torch base image to nvidia/cuda:12.4.0-runtime
+# and remove the CPU-only --index-url flag below.
+FROM python:3.11-slim
+
+LABEL org.opencontainers.image.title="AIKI-HLA end-to-end"
+LABEL org.opencontainers.image.description="Open peptide-MHC predictor leading on novel-allele generalization, with the broadest open HLA coverage (raw input -> predict; CPU; ESM-2 bundled)"
+LABEL org.opencontainers.image.source="https://github.com/aikium-public/aiki-hla"
+LABEL org.opencontainers.image.licenses="Apache-2.0"
+LABEL org.opencontainers.image.authors="Venkatesh Mysore <venkatesh@aikium.com>"
+
+# System packages needed by some pip wheels (fair-esm pulls in C++ extensions
+# for some dependencies). Cleaned up in the same RUN to keep image size down.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Torch CPU first (smaller than the GPU wheels). Pin the version for
+# reproducibility against the deployed-recipe checkpoint loading code.
+RUN pip install --no-cache-dir \
+    torch==2.4.0 --index-url https://download.pytorch.org/whl/cpu
+
+# ESM-2 backbone — fair-esm pulls torch transitively; we install it first
+# anyway to control the version.
+RUN pip install --no-cache-dir \
+    fair-esm>=2.0.0 \
+    huggingface-hub
+
+# AIKI-HLA + runtime deps
+COPY pyproject.toml README.md LICENSE ./
+COPY aiki_hla/ aiki_hla/
+RUN pip install --no-cache-dir .
+
+# Shared cache: ESM-2 weights + AIKI-HLA checkpoints
+ENV AIKI_MHC_CACHE=/models
+ENV TORCH_HOME=/models/torch
+ENV HF_HOME=/models/hf
+VOLUME ["/models"]
+
+RUN useradd -m -u 1000 aiki && chown -R aiki:aiki /app /models 2>/dev/null || true
+USER aiki
+
+ENTRYPOINT ["aiki-hla"]
+CMD ["--help"]

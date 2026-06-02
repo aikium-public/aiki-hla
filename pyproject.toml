@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aiki-hla"
+version = "1.0.0"
+description = "A factorized peptide-MHC predictor and a leakage-controlled benchmark for generalization to novel HLAs. Calibrated class-agnostic full-G-domain encoding plus a peptide-only ligand-likeness scorer composed as a parameter-free geometric mean (the factorization). Open 4.66M / research-use 5.8M experimental measurements over 421 / 507 HLA alleles."
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Venkatesh Mysore", email = "venkatesh@aikium.com"},
+    {name = "Radheesh Sharma Meda"},
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+keywords = ["MHC", "peptide", "neoantigen", "immunology", "binding prediction", "ESM-2"]
+dependencies = [
+    "torch>=2.0",
+    "fair-esm>=2.0.0",
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scikit-learn>=1.3",
+    "pyarrow>=14.0",
+    "tqdm>=4.65",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1",
+]
+plot = [
+    "matplotlib>=3.7",
+    "seaborn>=0.13",
+]
+
+[project.scripts]
+aiki-hla = "aiki_hla.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/aikium-public/aiki-hla"
+Documentation = "https://github.com/aikium-public/aiki-hla#readme"
+Repository = "https://github.com/aikium-public/aiki-hla"
+Issues = "https://github.com/aikium-public/aiki-hla/issues"
+"Zenodo deposit" = "https://doi.org/10.5281/zenodo.20520819"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["aiki_hla*"]
+
+[tool.setuptools.package-data]
+# *.pkl covers the two viability-gate sklearn pickles
+# (viability_gate_CI.pkl, viability_gate_CII.pkl). Note: sklearn pickles
+# are version-sensitive at the schema level; the installed
+# scikit-learn must be >= the one used to train (>= 1.3 covers the
+# released 1.8.0 training; older minor versions also load these
+# specific HistGradientBoostingClassifier + LogisticRegression artefacts
+# at time of release).
+"aiki_hla.data" = ["*.json", "*.tsv", "*.pkl"]

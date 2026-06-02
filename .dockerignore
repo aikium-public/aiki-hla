@@ -1,0 +1,51 @@
+# Exclude development + build artefacts from the Docker build context.
+# Keeping the context small means faster builds and no accidental inclusion
+# of local files.
+
+# Python build artefacts
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# Test + coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# CI
+.github/
+
+# OS-level
+.DS_Store
+Thumbs.db
+
+# Documentation + media that don't belong in the image
+docs/
+*.png
+*.pdf
+
+# Validation scripts (run by reviewers locally, not inside the image)
+validation/
+
+# Local model caches that might happen to be in the workspace
+checkpoints/
+*.pt
+*.bin
+.cache/
+.venv/
+venv/

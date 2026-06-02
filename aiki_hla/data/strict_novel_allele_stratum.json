@@ -1,0 +1,37 @@
+{
+  "doc": "Strict novel-allele stratum (9-allele methods-development extension). Headline strict generalization stratum from the manuscript Methods §'Cluster-aware splitting and strict novel-allele stratum'. Per-allele median AUROC of the deployed 3-seed ensemble on this stratum is 0.706 [0.648, 0.774].",
+  "version": "1.0.0",
+  "release_pin_sha": "see release-manifest checkpoint identity",
+  "n_alleles": 9,
+  "alleles": [
+    "HLA-DQA1*01:01-DQB1*05:01",
+    "HLA-DQA1*01:02-DQB1*05:01",
+    "HLA-DQA1*01:02-DQB1*05:02",
+    "HLA-DQA1*01:03-DQB1*06:03",
+    "HLA-DQA1*01:04-DQB1*05:03",
+    "HLA-C*03:04",
+    "HLA-C*04:01",
+    "HLA-C*06:02",
+    "HLA-C*15:02"
+  ],
+  "composition": {
+    "HLA-DQ": [
+      "HLA-DQA1*01:01-DQB1*05:01",
+      "HLA-DQA1*01:02-DQB1*05:01",
+      "HLA-DQA1*01:02-DQB1*05:02",
+      "HLA-DQA1*01:03-DQB1*06:03",
+      "HLA-DQA1*01:04-DQB1*05:03"
+    ],
+    "HLA-C": [
+      "HLA-C*03:04",
+      "HLA-C*04:01",
+      "HLA-C*06:02",
+      "HLA-C*15:02"
+    ]
+  },
+  "exclusions_under_label_quality": [
+    "HLA-C*08:01",
+    "HLA-DQA1*01:02-DQB1*06:04"
+  ],
+  "exclusions_reason": "Per-paper IEDB drill-down flagged these two as label-inversion outliers (per-allele AUROC < 0.40 from a single source). See manuscript Methods §'Cluster-aware splitting and strict novel-allele stratum'."
+}
