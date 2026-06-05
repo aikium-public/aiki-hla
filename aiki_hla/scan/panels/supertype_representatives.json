@@ -1,0 +1,28 @@
+{
+  "panel_name": "supertype_representatives",
+  "description": "One representative allele per Sette HLA supertype. Class I uses the canonical 9-supertype scheme (Sidney et al., BMC Immunology 2008); Class II uses the broad DR/DP/DQ supertype representatives. Use this panel for fast pre-screening before committing to a full 27-allele scan.",
+  "class_i": {
+    "n_alleles": 9,
+    "alleles": [
+      "HLA-A*01:01",
+      "HLA-A*02:01",
+      "HLA-A*03:01",
+      "HLA-A*24:02",
+      "HLA-B*07:02",
+      "HLA-B*08:01",
+      "HLA-B*27:05",
+      "HLA-B*44:02",
+      "HLA-B*58:01"
+    ]
+  },
+  "class_ii": {
+    "n_alleles": 5,
+    "alleles": [
+      "HLA-DRB1*01:01",
+      "HLA-DRB1*03:01",
+      "HLA-DRB1*04:01",
+      "HLA-DRB1*07:01",
+      "HLA-DRB1*15:01"
+    ]
+  }
+}
