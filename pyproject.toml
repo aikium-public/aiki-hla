@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "aiki-hla"
 version = "1.0.0"
-description = "A factorized peptide-MHC predictor and a leakage-controlled benchmark for generalization to novel HLAs. Calibrated class-agnostic full-G-domain encoding plus a peptide-only ligand-likeness scorer composed as a parameter-free geometric mean (the factorization). Open 4.66M / research-use 5.8M experimental measurements over 421 / 507 HLA alleles."
+description = "Measuring peptide-MHC generalization to unseen alleles across both HLA classes: a leakage-controlled benchmark and the predictor trained against it. Calibrated class-agnostic full-G-domain encoding plus a peptide-only ligand-likeness scorer composed as a parameter-free geometric mean (the factorization). Open 4.66M / research-use 5.8M experimental measurements over 421 / 507 HLA alleles."
 readme = "README.md"
 license = {text = "Apache-2.0"}
 requires-python = ">=3.10"

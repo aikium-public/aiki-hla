@@ -1,11 +1,56 @@
 # Changelog
 
+## 1.1.0 — Cancer-vaccine application surface + manuscript reframe (2026-06-07; documentation update 2026-06-17)
+
+The reference implementation gains the cancer-vaccine half of the
+AIKI-HLAScan surface, and the companion manuscript is reframed
+around the *measurement* question (see also Zenodo v1.1.0 at
+[10.5281/zenodo.20583336](https://doi.org/10.5281/zenodo.20583336),
+concept [10.5281/zenodo.20520819](https://doi.org/10.5281/zenodo.20520819)).
+
+Now accompanies *Measuring peptide–MHC generalization to unseen
+alleles across both HLA classes* (Mysore 2026, submitted to PLOS
+Computational Biology). The 4.66M / 5.8M open / research-use
+ensembles, the leakage-controlled benchmark, and the per-allele
+median AUROC headlines (0.913 conventional split, 0.765 on 39
+strictly-novel alleles, 0.949 on 111 rare subtypes) are unchanged.
+
+### New in `aiki_hla.scan`
+
+- `aiki_hla.scan.subsample` — uniform-stride pair-budget fitting
+  (replaces the prior C-terminal chop that silently dropped the back
+  of large proteins).
+- `aiki_hla.scan.mutations` — per-position 20-AA sweep, callable-agnostic
+  (caller passes `score_fn`); returns deimmunization and
+  neoantigen-visibility views.
+- `aiki_hla.scan.phbr` — Patient HLA Binding Rank (Marty *Cell* 2017)
+  with per-allele rank percentile, PHBR allele, per-peptide counts
+  at the conventional 0.5 % and 2 % rank thresholds.
+- `aiki_hla.scan.dai` — Differential Agretopicity Index (Duan *Nat
+  Genet* 2014; Łuksza *Nature* 2017): `parse_mutation_spec` accepts
+  `G12D` and `12:G>D` forms; `differential_agretopicity` has `log2`
+  (Łuksza form) and `diff` (Duan legacy form) modes;
+  `score_neoantigens` is the end-to-end DAI pipeline.
+- `aiki_hla.scan.lsp` — BioNTech BNT122 / Moderna mRNA-4157 27-mer
+  Long Synthetic Peptide cassette with symmetric flanks, overflow
+  recovered on the opposite end before truncation.
+
+All scoring continues to route through the AIKI-HLA 3-seed ensemble;
+no new ML. The new modules wrap field-standard formulas around
+established peptide–MHC scores.
+
+The Modal endpoint surface gains `/score_neoantigens` (DAI-ranked
+neoantigen output for a sequence × mutations × patient-HLA input).
+Live demo at https://aikium--aikihla-landing-page.modal.run.
+
 ## 1.0.0 — Initial release
 
 Open reference implementation accompanying *Aiki-HLA: a Class I and II
 peptide–MHC predictor separating ligand-likeness from allele
 specificity, with a leakage-controlled benchmark* (Mysore 2026,
-Nature Machine Intelligence).
+Nature Machine Intelligence — subsequently retitled and resubmitted
+to PLOS Computational Biology as *Measuring peptide–MHC generalization
+to unseen alleles across both HLA classes*; see v1.1.0 above).
 
 ### Model
 

@@ -1,7 +1,16 @@
 # AIKI-HLA
 
-A factorized peptide–MHC predictor and a leakage-controlled benchmark
-for generalization to novel HLAs.
+Measuring peptide–MHC generalization to unseen alleles across both
+HLA classes — a leakage-controlled benchmark and the predictor we
+trained against it.
+
+Reported pMHC AUROCs of 0.85–0.95 partly reflect *interpolation*
+rather than extrapolation to unseen alleles, because immunopeptidome
+data are dense on a few well-studied alleles and sparse on the rest.
+This is a property of the data, not of any one method. The released
+benchmark holds out alleles at the sequence and cluster level: per-allele
+median AUROC brackets to [0.71, 0.92] — 0.913 conventional, 0.765 on
+39 strictly novel alleles, 0.949 on 111 rare subtypes.
 
 Under the released benchmark's pair-symmetric cross-tool protocol,
 AIKI-HLA **leads eight published open predictor variants** (MHCflurry
@@ -85,8 +94,8 @@ proteome-screening FPR by **20–280×**.
 
 This repository is the open reference implementation for the manuscript:
 
-> Mysore, V. *Aiki-HLA: a factorized peptide–MHC predictor and a
-> leakage-controlled benchmark for generalization to novel HLAs.* (2026).
+> Mysore, V. *Measuring peptide–MHC generalization to unseen alleles
+> across both HLA classes.* Submitted, PLOS Computational Biology (2026).
 
 The companion Zenodo deposit
 ([10.5281/zenodo.20520819](https://doi.org/10.5281/zenodo.20520819) — concept
@@ -220,14 +229,13 @@ If you use AIKI-HLA, please cite both the code and the manuscript:
 
 ```bibtex
 @article{aikihla2026,
-    title   = {Aiki-HLA: a factorized peptide-MHC predictor and a
-               leakage-controlled benchmark for generalization to
-               novel HLAs},
+    title   = {Measuring peptide-MHC generalization to unseen alleles
+               across both HLA classes},
     author  = {Mysore, Venkatesh},
-    journal = {Nature Machine Intelligence},
+    journal = {PLOS Computational Biology},
     year    = {2026},
-    doi     = {10.5281/zenodo.20520820},
-    note    = {Zenodo concept DOI 10.5281/zenodo.20520819 for the latest version},
+    note    = {Submitted. Zenodo concept DOI 10.5281/zenodo.20520819
+               resolves to the latest data + code release.},
 }
 ```
 
